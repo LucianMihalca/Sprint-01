@@ -1,0 +1,25 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "A simple to-do list application built with TypeScript and SASS.",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc --watch",
+    "start:dev": "nodemon dist/index.js",
+    "sass": "sass --watch src/scss:dist/css",
+    "build": "tsc && sass src/scss:dist/css",
+    "test": "your-test-runner command"
+  },
+  "keywords": ["to-do", "TypeScript", "SASS", "task management"],
+  "author": "Lucian",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "your-test-runner": "^version"
+  },
+  "dependencies": {
+    "sass": "^1.69.0"
+  }
+}
