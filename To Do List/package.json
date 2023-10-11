@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc --watch",
-    "start:dev": "nodemon dist/index.js",
+    "start:dev": "nodemon dist",
     "sass": "sass --watch src/scss:dist/css",
     "build": "tsc && sass src/scss:dist/css",
     "test": "your-test-runner command"
