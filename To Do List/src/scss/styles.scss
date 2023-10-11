@@ -105,6 +105,9 @@ form {
 .new::placeholder {
   opacity: 0.4;
 }
+.new.list::placeholder {
+  color: red;
+}
 
 .new:focus {
   border-bottom-width: 3px;
