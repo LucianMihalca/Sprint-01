@@ -1,4 +1,4 @@
-# Proyecto Sprint 01
+## === Proyecto Sprint 01 ===
 
 El objetivo principal de este proyecto es adquirir una base sólida en las siguientes áreas:
 
@@ -39,7 +39,7 @@ Este proyecto se distribuye bajo la licencia MIT. Consulta el archivo [LICENSE.m
 
 Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos a través de [correo electrónico](correo@example.com) 
 
-# Entrega 1.1: To-Do List
+## === Entrega 1.1: To-Do List ===
 
 ¡Hemos construido una lista de tareas (To-Do List)!
 
@@ -70,6 +70,15 @@ Para comenzar con el proyecto, puedes utilizar los siguientes comandos:
 - `npm run build` para inicializar Webpack y compilar el archivo `bundle.js`.
 
 
+## === Entrega 1.2: Patrones de diseño ===
 
+Para esta tarea, opté por utilizar el patrón de diseño **Modelo-Vista-Controlador (MVC)** por las siguientes razones:
 
+- **Flexibilidad**: El diseño modular de MVC permite una separación clara entre el modelo, la vista y el controlador, lo que facilita la organización del código.
+
+- **Simplicidad**: Este patrón facilita la comprensión del flujo de la aplicación, lo que acelera tanto el desarrollo como el tiempo de revisión del código.
+
+- **Escalabilidad**: MVC proporciona un marco robusto que me permite escalar el proyecto de manera efectiva y con confianza.
+
+En resumen, MVC es un enfoque que ofrece **eficacia y eficiencia**, mejorando significativamente la calidad y la mantenibilidad de mis proyectos.
 
