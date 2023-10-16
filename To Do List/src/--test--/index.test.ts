@@ -1,4 +1,4 @@
-import { addTodo, deleteCheck, filterTodo, saveLocalTodos, getLocalTodos } from "../index";
+import { filterTodo, saveLocalTodos, getLocalTodos } from "../index";
 
 // 1. Mock de localStorage con tipo Storage
 let mockLocalStorage: Storage = {

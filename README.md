@@ -65,9 +65,10 @@ El objetivo de este ejercicio es crear una aplicación de lista de tareas utiliz
 
 Para comenzar con el proyecto, puedes utilizar los siguientes comandos:
 
+- `npm start` para iniciar la compilación de TypeScript a JavaScript.
 - `npm run test` para iniciar las pruebas.
 - `npm run build` para inicializar Webpack y compilar el archivo `bundle.js`.
-- `npm start` para iniciar la compilación de TypeScript a JavaScript.
+
 
 
 
