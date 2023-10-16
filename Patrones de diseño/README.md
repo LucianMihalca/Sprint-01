@@ -39,6 +39,7 @@ Este método toma una tarea como argumento y la agrega a la lista de tareas.
 
 💡 `getTasks()`
 Este método devuelve la lista actual de tareas.
+
 Este modelo actúa como la "fuente única de verdad"  para el estado de nuestras tareas en la aplicación.
 
 ---
