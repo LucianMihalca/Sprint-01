@@ -39,11 +39,9 @@ Este método toma una tarea como argumento y la agrega a la lista de tareas.
 
 💡 `getTasks()`
 Este método devuelve la lista actual de tareas.
-
----
 Este modelo actúa como la "fuente única de verdad"  para el estado de nuestras tareas en la aplicación.
 
-
+---
 
 ## 🖥 2. Vista - `TaskView`
 La clase `TaskView`  es responsable de interactuar con la interfaz de usuario.
@@ -84,6 +82,7 @@ Borra el campo de entrada después de que se ha añadido una tarea.
 💡 renderTasks(tasks)
 Toma una lista de tareas y actualiza la interfaz de usuario para mostrarlas.   
 
+---
 
 ## 🎮 3. Controlador - `TaskController`
 
@@ -119,6 +118,8 @@ Este método inicializa el controlador, añadiendo un "listener" al botón  para
 
 💡 addTask()
 Este método obtiene la tarea del campo de entrada, la agrega al modelo y actualiza la vista.
+
+---
 
 
 ## 🚀 Conclusión
