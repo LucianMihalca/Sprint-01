@@ -8,7 +8,7 @@
     "build": "webpack --mode production",
     "test": "jest",
     "start": "tsc --watch",
-    "start:dev": "nodemon --no-stdin --quiet dist/cli.js"
+    "start:cli": "node dist/cli.js"
   },
   "keywords": [
     "to-do",

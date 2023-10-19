@@ -8,7 +8,7 @@ let mockLocalStorage: Storage = {
   clear: jest.fn(),
   length: 0,
   key: jest.fn(),
-} as unknown as Storage;
+}  as Storage;
 
 // 2. Usar Object.defineProperty para asignar el mock a window.localStorage
 Object.defineProperty(window, "localStorage", {

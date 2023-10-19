@@ -1,5 +1,11 @@
 import inquirer from "inquirer";
 
+process.on("SIGINT", () => {
+  // Realiza las tareas de limpieza aquí, si las hay.
+  saveTodos();
+  // Finaliza el proceso
+  process.exit();
+});
 type Todo = {
   description: string;
   completed: boolean;
@@ -39,7 +45,8 @@ const showMenu = (): void => {
           break;
         case "Salir":
           saveTodos();
-          process.exit();
+          console.log("Saliendo de la aplicación...");
+          process.kill(process.pid, "SIGINT");
           break;
       }
     });
@@ -53,11 +60,21 @@ const addTodo = (): void => {
         name: "description",
         message: "Introduce la nueva Tarea:",
       },
+      {
+        type: "list",
+        name: "nextAction",
+        message: "¿Qué te gustaría hacer?",
+        choices: ["Añadir otra tarea", "Volver al menú principal"],
+      },
     ])
-    .then((answers: { description: string }) => {
+    .then((answers: { description: string; nextAction: string }) => {
       todos.push({ description: answers.description, completed: false });
       saveTodos();
-      showMenu();
+      if (answers.nextAction === "Añadir otra tarea") {
+        addTodo(); // Llamada recursiva para seguir añadiendo tareas
+      } else {
+        showMenu();
+      }
     });
 };
 

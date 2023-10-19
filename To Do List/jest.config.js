@@ -1,5 +1,11 @@
+// /** @type {import('ts-jest').JestConfigWithTsJest} */
+// module.exports = {
+//   preset: 'ts-jest',
+//   testEnvironment: 'jsdom',
+// };
 /** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
+export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 };

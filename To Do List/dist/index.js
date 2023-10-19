@@ -2,7 +2,7 @@
  * Función de inicialización que se ejecuta cuando el DOM está completamente cargado.
  * - Realiza la selección de elementos importantes del DOM.
  * - Obtiene las tareas pendientes almacenadas localmente, si las hay.
- * - Establece los listeners de eventos para los botones y elementos interactivos.
+ * - Establece los listeners de eventos para los botones y elementos .
  */
 document.addEventListener("DOMContentLoaded", () => {
     // Selección de elementos del DOM
