@@ -68,6 +68,7 @@ Para comenzar con el proyecto, puedes utilizar los siguientes comandos:
 - `npm start` para iniciar la compilación de TypeScript a JavaScript.
 - `npm run test` para iniciar las pruebas.
 - `npm run build` para inicializar Webpack y compilar el archivo `bundle.js`.
+- `npm run start:cli` para inicializar el archivo `cli.js`. y abrir la interfaz de línea de comandos (CLI) de la aplicación.
 
 
 ## === Entrega 1.2: Patrones de diseño ===
