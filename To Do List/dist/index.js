@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeLocalTodos = exports.getLocalTodos = exports.saveLocalTodos = exports.filterTodo = exports.deleteCheck = exports.addTodo = void 0;
 /**
  * Función de inicialización que se ejecuta cuando el DOM está completamente cargado.
  * - Realiza la selección de elementos importantes del DOM.
@@ -24,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * Función para agregar una nueva tarea a la lista.
  */
-function addTodo(event, todoInput, todoList, saveLocalTodos) {
+export function addTodo(event, todoInput, todoList, saveLocalTodos) {
     event.preventDefault();
     const todoDiv = document.createElement("div");
     todoDiv.classList.add("todo");
@@ -45,11 +42,10 @@ function addTodo(event, todoInput, todoList, saveLocalTodos) {
     todoList.appendChild(todoDiv);
     todoInput.value = "";
 }
-exports.addTodo = addTodo;
 /**
  * Función para eliminar o marcar como completada una tarea existente.
  */
-function deleteCheck(e, removeLocalTodos) {
+export function deleteCheck(e, removeLocalTodos) {
     const item = e.target;
     if (item.classList[0] === "trash-btn") {
         const todo = item.parentElement;
@@ -64,11 +60,10 @@ function deleteCheck(e, removeLocalTodos) {
         todo.classList.toggle("completed");
     }
 }
-exports.deleteCheck = deleteCheck;
 /**
  * Función para filtrar tareas basado en su estado de finalización.
  */
-function filterTodo(e, todos) {
+export function filterTodo(e, todos) {
     console.log("Función filterTodo activada"); // Verifica que la función se activa
     // Imprime el valor del elemento seleccionado
     console.log("Valor seleccionado:", e.target.value);
@@ -98,11 +93,10 @@ function filterTodo(e, todos) {
         }
     });
 }
-exports.filterTodo = filterTodo;
 /**
  * Función para guardar las tareas en el almacenamiento local.
  */
-function saveLocalTodos(todo, localStorage) {
+export function saveLocalTodos(todo, localStorage) {
     let todos;
     const item = localStorage.getItem("todos");
     if (item !== null && item !== "undefined") {
@@ -114,11 +108,10 @@ function saveLocalTodos(todo, localStorage) {
     todos.push(todo);
     localStorage.setItem("todos", JSON.stringify(todos));
 }
-exports.saveLocalTodos = saveLocalTodos;
 /**
  * Función para obtener tareas del almacenamiento local.
  */
-function getLocalTodos() {
+export function getLocalTodos() {
     let todos = [];
     const storedTodos = localStorage.getItem("todos");
     if (storedTodos !== null && storedTodos !== "undefined") {
@@ -126,11 +119,10 @@ function getLocalTodos() {
     }
     return todos;
 }
-exports.getLocalTodos = getLocalTodos;
 /**
  * Función para eliminar una tarea del almacenamiento local.
  */
-function removeLocalTodos(todo) {
+export function removeLocalTodos(todo) {
     let todos;
     if (localStorage.getItem("todos") === null) {
         todos = [];
@@ -142,4 +134,3 @@ function removeLocalTodos(todo) {
     todos.splice(todos.indexOf(todoIndex), 1);
     localStorage.setItem("todos", JSON.stringify(todos));
 }
-exports.removeLocalTodos = removeLocalTodos;

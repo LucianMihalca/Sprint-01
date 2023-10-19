@@ -73,7 +73,6 @@ const removeTodo = (): void => {
     ])
     .then((answers: { todo: string }) => {
       if (answers.todo !== "Volver al menú") {
-        // Nuevo prompt de confirmación para eliminar
         inquirer
           .prompt([
             {
@@ -113,7 +112,6 @@ const modifyTodo = (): void => {
     ])
     .then((answers: { todo: string; newDescription?: string }) => {
       if (answers.todo !== "Volver al menú") {
-        // Nuevo prompt de confirmación para modificar
         inquirer
           .prompt([
             {

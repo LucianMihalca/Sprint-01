@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = require("../index");
+import { filterTodo, saveLocalTodos, getLocalTodos } from "../index";
 // 1. Mock de localStorage con tipo Storage
 let mockLocalStorage = {
     getItem: jest.fn(),
@@ -36,7 +34,7 @@ describe("4. saveLocalTodos function", () => {
     it("should save todo to local storage", () => {
         mockLocalStorage.getItem.mockReturnValueOnce(null);
         const todo = "Buy milk";
-        (0, index_1.saveLocalTodos)(todo, mockLocalStorage);
+        saveLocalTodos(todo, mockLocalStorage);
         const expectedData = JSON.stringify([todo]);
         expect(mockLocalStorage.setItem).toHaveBeenCalledWith("todos", expectedData);
     });
@@ -44,7 +42,7 @@ describe("4. saveLocalTodos function", () => {
         const existingTodo = "Write tests";
         mockLocalStorage.getItem.mockReturnValueOnce(JSON.stringify([existingTodo]));
         const newTodo = "Buy milk";
-        (0, index_1.saveLocalTodos)(newTodo, mockLocalStorage);
+        saveLocalTodos(newTodo, mockLocalStorage);
         const expectedData = JSON.stringify([existingTodo, newTodo]);
         expect(mockLocalStorage.setItem).toHaveBeenCalledWith("todos", expectedData);
     });
@@ -105,7 +103,7 @@ describe("7. filterTodo", () => {
         filterSelect.dispatchEvent(fakeEvent);
         // Obtén la lista de todos y ejecuta la función filterTodo
         const todos = document.querySelectorAll(".todo");
-        (0, index_1.filterTodo)(fakeEvent, todos);
+        filterTodo(fakeEvent, todos);
         // Verifica si todo ha ido como esperamos
         todos.forEach((todo) => {
             const htmlTodo = todo; // Type assertion aquí
@@ -127,7 +125,7 @@ describe("8. getLocalTodos function", () => {
         // Simula que getItem devuelva null
         mockLocalStorage.getItem.mockReturnValueOnce(null);
         // Llamamos a la función sin datos en localStorage
-        const result = (0, index_1.getLocalTodos)();
+        const result = getLocalTodos();
         // Verificamos que devuelva un array vacío
         expect(result).toEqual([]);
     });
@@ -137,7 +135,7 @@ describe("8. getLocalTodos function", () => {
         // Simula que getItem devuelva esos datos de prueba
         mockLocalStorage.getItem.mockReturnValueOnce(JSON.stringify(todosData));
         // Llamamos a la función
-        const result = (0, index_1.getLocalTodos)();
+        const result = getLocalTodos();
         // Verificamos que devuelva los datos correctos
         expect(result).toEqual(todosData);
     });
