@@ -1,4 +1,7 @@
 import inquirer from "inquirer";
+import  ToDo  from "./logica.cli.js";
+
+const todoManager = new ToDo();
 
 process.on("SIGINT", () => {
   // Realiza las tareas de limpieza aquí, si las hay.
@@ -6,17 +9,24 @@ process.on("SIGINT", () => {
   // Finaliza el proceso
   process.exit();
 });
+
+type ModifyTodoAnswers = {
+  todo: string;
+  newDescription?: string; 
+};
+
 type Todo = {
   description: string;
   completed: boolean;
 };
 
 // Inicializa un array vacío para guardar las tareas
-let todos: Todo[] = [];
+// let todos: Todo[] = [];
 
 const saveTodos = (): void => {};
 
 const showMenu = (): void => {
+  console.clear(); // Borra la pantalla de la terminal
   inquirer
     .prompt([
       {
@@ -53,6 +63,7 @@ const showMenu = (): void => {
 };
 
 const addTodo = (): void => {
+  console.clear(); // Limpiar la consola antes de mostrar el prompt
   inquirer
     .prompt([
       {
@@ -63,12 +74,12 @@ const addTodo = (): void => {
       {
         type: "list",
         name: "nextAction",
-        message: "¿Qué te gustaría hacer?",
         choices: ["Añadir otra tarea", "Volver al menú principal"],
       },
     ])
+
     .then((answers: { description: string; nextAction: string }) => {
-      todos.push({ description: answers.description, completed: false });
+      todoManager.addTodo(answers.description);
       saveTodos();
       if (answers.nextAction === "Añadir otra tarea") {
         addTodo(); // Llamada recursiva para seguir añadiendo tareas
@@ -76,6 +87,8 @@ const addTodo = (): void => {
         showMenu();
       }
     });
+
+  
 };
 
 const removeTodo = (): void => {
@@ -85,9 +98,10 @@ const removeTodo = (): void => {
         type: "list",
         name: "todo",
         message: "Elige la tarea para eliminar:",
-        choices: [...todos.map((todo) => todo.description), "Volver al menú"],
+        choices: [...todoManager.todos.map((todo) => todo.description), "Volver al menú"],
       },
     ])
+
     .then((answers: { todo: string }) => {
       if (answers.todo !== "Volver al menú") {
         inquirer
@@ -98,9 +112,10 @@ const removeTodo = (): void => {
               message: `¿Estás seguro de que quieres eliminar la tarea "${answers.todo}"?`,
             },
           ])
+
           .then((confirmAnswers: { confirm: boolean }) => {
             if (confirmAnswers.confirm) {
-              todos = todos.filter((todo) => todo.description !== answers.todo);
+              todoManager.removeTodo(answers.todo);
               saveTodos();
             }
             showMenu();
@@ -108,6 +123,16 @@ const removeTodo = (): void => {
       } else {
         showMenu();
       }
+      //     .then((confirmAnswers: { confirm: boolean }) => {
+      //       if (confirmAnswers.confirm) {
+      //         todos = todos.filter((todo) => todo.description !== answers.todo);
+      //         saveTodos();
+      //       }
+      //       showMenu();
+      //     });
+      // } else {
+      //   showMenu();
+      // }
     });
 };
 
@@ -118,7 +143,7 @@ const modifyTodo = (): void => {
         type: "list",
         name: "todo",
         message: "Elige la tarea para modificar:",
-        choices: [...todos.map((todo) => todo.description), "Volver al menú"],
+        choices: [...todoManager.todos.map((todo) => todo.description), "Volver al menú"],
       },
       {
         type: "input",
@@ -127,62 +152,101 @@ const modifyTodo = (): void => {
         when: (answers: { todo: string }) => answers.todo !== "Volver al menú",
       },
     ])
-    .then((answers: { todo: string; newDescription?: string }) => {
+    .then((answers: ModifyTodoAnswers) => {
       if (answers.todo !== "Volver al menú") {
         inquirer
           .prompt([
-            {
-              type: "confirm",
-              name: "confirm",
-              message: `¿Estás seguro de que quieres modificar la tarea "${answers.todo}"?`,
-            },
+            // Confirmación aquí
           ])
-          .then((confirmAnswers: { confirm: boolean }) => {
+          .then((confirmAnswers) => {
             if (confirmAnswers.confirm && answers.newDescription !== undefined) {
-              const todo = todos.find((t) => t.description === answers.todo);
-              if (todo) {
-                todo.description = answers.newDescription;
-                saveTodos();
-              }
+              todoManager.modifyTodo(answers.todo, answers.newDescription); // Utiliza el método de todoManager
+              showMenu();
             }
-            showMenu();
           });
       } else {
         showMenu();
       }
     });
+  // .then((answers: { todo: string; newDescription?: string }) => {
+  //   if (answers.todo !== "Volver al menú") {
+  //     inquirer
+  //       .prompt([
+  //         {
+  //           type: "confirm",
+  //           name: "confirm",
+  //           message: `¿Estás seguro de que quieres modificar la tarea "${answers.todo}"?`,
+  //         },
+  //       ])
+  //       .then((confirmAnswers: { confirm: boolean }) => {
+  //         if (confirmAnswers.confirm && answers.newDescription !== undefined) {
+  //           const todo = todos.find((t) => t.description === answers.todo);
+  //           if (todo) {
+  //             todo.description = answers.newDescription;
+  //             saveTodos();
+  //           }
+  //         }
+  //         showMenu();
+  //       });
+  //   } else {
+  //     showMenu();
+  //   }
+  // });
 };
 
 const markCompleted = (): void => {
+  const choices = todoManager.todos.map((todo, index) => ({
+    name: `${index + 1}. ${todo.description} - ${todo.completed ? "Completada" : "Pendiente"}`,
+    value: todo,
+  }));
+
   inquirer
     .prompt([
       {
-        type: "list",
-        name: "todo",
-        message: "Elige la tarea para marcar como completada:",
-        choices: [...todos.map((todo) => todo.description), "Volver al menú"],
+        type: "checkbox",
+        name: "selectedTodos",
+        message: "Elige la tarea completada:",
+        choices: [
+          {
+            name: "Volver al menú",
+            value: null,
+          },
+          new inquirer.Separator(),
+          ...choices,
+        ],
       },
     ])
-    .then((answers: { todo: string }) => {
-      if (answers.todo !== "Volver al menú") {
-        const todo = todos.find((t) => t.description === answers.todo);
-        if (todo) {
-          todo.completed = true;
-        }
-        saveTodos();
+    .then((answers: { selectedTodos: Todo[] })  => {
+      const selectedTodos = answers.selectedTodos.filter((todo) => todo !== null);
+      if (selectedTodos.length > 0) {
+        todoManager.markCompleted(selectedTodos); // Utiliza el método de todoManager
+        console.log("Tareas marcadas como completadas.");
+      } else {
+        console.log("No se seleccionaron tareas.");
       }
       showMenu();
     });
 };
 
 const listTodos = (): void => {
-  console.log("\nTareas pendientes:");
-  todos.forEach((todo, index) => {
-    const status = todo.completed ? "Completada" : "Pendiente";
-    console.log(`${index + 1}. ${todo.description} - ${status}`);
+  const todoList = todoManager.listTodos(); // Utiliza el método de todoManager
+  console.log("\n🚀 Tu Lista de Tareas:");
+  todoList.forEach((todo) => {
+    console.log(todo);
   });
   console.log("");
-  showMenu();
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "nextAction",
+        message: "¿Qué te gustaría hacer?",
+        choices: ["Volver al menú principal"],
+      },
+    ])
+    .then(() => {
+      showMenu(); // Llama a showMenu después de ver las tareas
+    });
 };
 
 showMenu();
